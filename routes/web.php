@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BlogPostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +30,14 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+// Route::get('/blogpost', [\App\Http\Controllers\BlogPostController::class, 'index']);
+
+Route::controller(BlogPostController::class)->group(function () {
+    Route::get('/blogpost', [BlogPostController::class, 'index'])->name('blogpost.index');
+    Route::post('/blogpost', [BlogPostController::class, 'store'])->name('blogpost.store');
+    Route::get('/blogpost/{blogPost}', [BlogPostController::class, 'show'])->name('blogpost.show');
+    Route::get('/blogpost/{blogPost}/edit', [BlogPostController::class, 'edit'])->name('blogpost.edit');
+    Route::put('/blogpost/{blogPost}/edit', [BlogPostController::class, 'update'])->name('blogpost.update');
+    Route::delete('/blogpost/{blogPost}', [BlogPostController::class, 'destroy'])->name('blogpost.destroy');
+});
